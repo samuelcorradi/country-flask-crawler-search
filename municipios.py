@@ -18,31 +18,48 @@ def municipio(pagina=1, filtro=""):
 	'''
     endpoint para listar municipios
     '''
-	data = []
 	conn = sqlite3.connect('base.sqlite')
 	cur = conn.cursor()
-	pagina = (pagina - 1) * 10;
-
-	r = cur.execute(query(pagina, filtro));
+	data = []
+	r = query(cur, pagina, filtro)
 	for row in r:
 		data.append({'key':row[0],'ibge':row[1],'nome':row[2],'url':row[3]})
 	cur.close();
 	json_data = json.dumps(data)
 	return json_data
 
-def query(pagina, filtro):
+def query(cur, pagina, filtro):
 	'''
     gera o comando SQL para buscar os
 	municipios
+	Recebe o cursor da consulta, as
+	informacoes de busca
+	Retorna o cursor com os resultados
+	da busca
     '''
-	query = "SELECT * FROM municipios";
-	if filtro.isdigit()==True:
-		query = query + " WHERE ibge_code='" + filtro + "'";
-	elif filtro!="":
-		query = query + " WHERE nome LIKE '%" + filtro + "%'";
-	query = query + " LIMIT 10 OFFSET " + str(pagina) + ";";
-	print query;
-	return query;
+	pagina = (pagina - 1) * 10;
+	sql = "SELECT * FROM municipios "
+	bind = [pagina]
+
+
+	# se ha algum filtro, testa se eh
+	# pelo codigo do IBGE ou qualquer
+	# outra string
+	if filtro!="":
+		if filtro.isdigit()==True:
+			sql = sql + "WHERE ibge_code = ? "
+		else:
+			sql = sql + "WHERE nome LIKE ? "
+			filtro = '%' + filtro + '%'
+		bind.insert(0, filtro)
+
+
+	sql = sql + "LIMIT 10 OFFSET ?;"
+
+	print sql;
+
+	return cur.execute(sql, bind);
+
 
 if __name__ == "__main__":
     app.run();
