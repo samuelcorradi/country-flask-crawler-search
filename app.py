@@ -12,7 +12,7 @@ db = municipiosdb.MunicipiosDb(DB_PATH)
 
 
 @app.after_request
-def after_request(response):
+def after_request(resposta):
     '''
     Este decorator foi adicionado
     apenas para alterar o cabecalho
@@ -20,10 +20,10 @@ def after_request(response):
     para testar a aplicacao em localhost.
     AO COMITAR PARA PRODUCAO, REMOVE-LO
     '''
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-    return response
+    resposta.headers.add('Access-Control-Allow-Origin', '*')
+    resposta.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    resposta.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    return resposta
 
 
 @app.route('/')
