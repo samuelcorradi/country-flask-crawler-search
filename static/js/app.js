@@ -1,55 +1,57 @@
-/**
- * Requisicao AJAX para buscar
- * lista de municipios.
- */
-function buscaMunicipio(pag, filtro)
+(function()
 {
-    
-    pag = pag || 1;
-    
-    filtro = filtro || "";
 
-    $.ajax({'url': "http://localhost:5000/municipio/" + pag + "/" + filtro, 'crossDomain': true})
-    .done(function(data)
+    /**
+     * Requisicao AJAX para buscar
+     * lista de municipios.
+     */
+    function buscaMunicipio(pag, filtro)
     {
+        
+        pag = pag || 1;
+        
+        filtro = filtro || "";
 
-        json = jQuery.parseJSON(data);
-
-        console.log(json);
-
-        if(json.length<1)
+        $.ajax({'url': "http://localhost:5000/municipio/" + pag + "/" + filtro, 'crossDomain': true})
+        .done(function(data)
         {
-            alert("Não foram encontrados mais registros.");
-        }
 
-        preencheLista(json);
+            json = jQuery.parseJSON(data);
 
-        $('#pagina_atual').val(pag);
+            if(json.length<1)
+            {
+            	
+                alert("Não foram encontrados mais registros.");
 
-    });
+            }
+            else
+            {
+            
+            	preencheLista(json);
 
-}
+            	$('#pagina_atual').val(pag);
+            
+            }
 
-function preencheLista(data)
-{
+        });
 
-    var body = $('content table tbody');
-
-    body.empty();
-    
-    for(var i = 0; i<data.length; i++)
-    {
-        body.append("<tr><td>" + data[i]['ibge'] + "</td><td>" +
-            data[i]['nome'] + "</td><td>" +
-            data[i]['url'] + "</td></tr>");
     }
 
-}
+    function preencheLista(data)
+    {
 
-$(function()
-{
+        var body = $('content table tbody');
 
-    buscaMunicipio(1);
+        body.empty();
+        
+        for(var i = 0; i<data.length; i++)
+        {
+            body.append("<tr><td>" + data[i]['ibge'] + "</td><td>" +
+                data[i]['nome'] + "</td><td>" +
+                data[i]['url'] + "</td></tr>");
+        }
+
+    }
 
     $('form').submit(function(e)
     {
@@ -65,11 +67,7 @@ $(function()
 
         if(e.which == 13)
         {
-
-            console.log($(this).val());
-
             buscaMunicipio($(this).val(), $('input[name=filtro]').val());
-        
         }
 
     });
@@ -111,5 +109,12 @@ $(function()
 
     });
 
-});
+    /*
+     * Quando carrega a pagina jah
+     * faz a busca da primeira
+     * pagina.
+     */
+    buscaMunicipio(1);
+
+})();
 
