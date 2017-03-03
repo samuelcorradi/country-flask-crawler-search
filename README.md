@@ -5,7 +5,8 @@
 Este programa permite cadastrar e buscar os municipios
 do estado de Minas Gerais em uma base de dados SQLite.
 
-O programa e dividido em dois arquivos principais:
+O programa é escrito na **versão 2.7** do Python, e é
+dividido em dois arquivos principais:
 
 * extracao.py - Arquivo responsável por gerar a base dados dos municipios.
 * municipios.py - Programa que executa um servidor que pode ser acessado via web para pesquisa.

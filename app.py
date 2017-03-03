@@ -2,10 +2,14 @@
 Realiza extracao dos dados de municipios
 e salva em um banco de dados SQLite.
 '''
+from config import DB_PATH
 from flask import Flask, render_template
 import municipiosdb
 import json
+
 app = Flask(__name__)
+db = municipiosdb.MunicipiosDb(DB_PATH)
+
 
 @app.after_request
 def after_request(response):
@@ -21,6 +25,7 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     return response
 
+
 @app.route('/')
 def index():
     '''
@@ -30,6 +35,7 @@ def index():
     '''
     return render_template('busca.html')
 
+
 @app.route('/municipio/', methods=["GET"])
 @app.route('/municipio/<int:pagina>/', methods=["GET"])
 @app.route('/municipio/<int:pagina>/<string:filtro>/', methods=["GET"])
@@ -37,12 +43,12 @@ def municipio(pagina=1, filtro=""):
     '''
     endpoint para listar municipios
     '''
-    db = municipiosdb.MunicipiosDb('base.sqlite')
     data = []
     r = db.query(pagina, filtro)
     for row in r:
-        data.append({'ibge':row[0],'nome':row[1],'url':row[2]})
+        data.append({'ibge': row[0], 'nome': row[1], 'url': row[2]})
     return json.dumps(data)
 
+
 if __name__ == "__main__":
-    app.run();
+    app.run()
