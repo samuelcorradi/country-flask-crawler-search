@@ -1,3 +1,4 @@
+# coding:utf-8
 '''
 Realiza extracao dos dados de municipios
 e salva em um banco de dados SQLite.
@@ -30,7 +31,7 @@ def extracao():
             db.insert(muni["codigo-ibge"], muni["nome"], muni["url"])
         print "Extracao realizada com sucesso!\n"
     except:
-        print "Extracao NAO realizada:", sys.exc_info()[0]
+        print "Extracao NAO realizada:"
         raise
 
 
