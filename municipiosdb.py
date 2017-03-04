@@ -7,7 +7,7 @@ class MunicipiosDb(object):
     _cur = None
 
     def __init__(self, base):
-        self._conn = sqlite3.connect(base)
+        self._conn = sqlite3.connect(base, check_same_thread=False)
         self._cur = self._conn.cursor()
 
     def query(self, pagina=1, filtro=""):
