@@ -1,3 +1,4 @@
+# coding:utf-8
 '''
 Realiza extracao dos dados de municipios
 e salva em um banco de dados SQLite.
@@ -8,6 +9,7 @@ import municipiosdb
 import json
 
 app = Flask(__name__)
+app.debug = True
 db = municipiosdb.MunicipiosDb(DB_PATH)
 
 
@@ -33,7 +35,7 @@ def index():
     Carrega template com a
     pagina de busca.
     '''
-    return render_template('busca.html')
+    return render_template('busca.html'), 200
 
 
 @app.route('/municipio/', methods=["GET"])
@@ -47,7 +49,7 @@ def municipio(pagina=1, filtro=""):
     r = db.query(pagina, filtro)
     for row in r:
         data.append({'ibge': row[0], 'nome': row[1], 'url': row[2]})
-    return json.dumps(data)
+    return json.dumps(data), 200
 
 
 if __name__ == "__main__":
