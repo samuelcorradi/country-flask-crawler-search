@@ -1,3 +1,8 @@
+/**
+ * Funcoes para controle da parte
+ * cliente web que interage com 
+ * a API no webserver.
+ */
 (function()
 {
 
@@ -5,38 +10,50 @@
      * Requisicao AJAX para buscar
      * lista de municipios.
      */
-    function buscaMunicipio(pag, filtro)
+    function buscaMunicipio(pagina, filtro)
     {
         
-        pag = pag || 1;
+        pagina = pagina || 1;
         
         filtro = filtro || "";
 
-        $.ajax({'url': "http://localhost:5000/municipio/" + pag + "/" + filtro, 'crossDomain': true})
+        var req_uri = "http://localhost:5000/municipio/" + filtro;
+
+        $.getJSON({
+            'url': req_uri,
+            'crossDomain': true,
+            'data': {'pagina': pagina}})
         .done(function(data)
         {
 
-            json = jQuery.parseJSON(data);
-
-            if(json.length<1)
+            if(data.length<1)
             {
-            	
+
                 alert("Não foram encontrados mais registros.");
 
             }
             else
             {
             
-            	preencheLista(json);
+            	preencheLista(data);
 
-            	$('#pagina_atual').val(pag);
+            	$('#pagina_atual').val(pagina);
             
             }
+
+        }).fail(function()
+        {
+
+            alert("Ocorreu uma falha na requisição dos dados!");
 
         });
 
     }
 
+    /**
+     * Preenche a tabela HTML com os resultados
+     * de busca.
+     */
     function preencheLista(data)
     {
 
@@ -53,6 +70,13 @@
 
     }
 
+    /**
+     * Quando o formulario for
+     * submetido, faz a busca
+     * buscando a primeira pagina
+     * de resultados e o filtro
+     * digitado.
+     */
     $('form').submit(function(e)
     {
 
@@ -62,6 +86,10 @@
 
     });
 
+    /**
+     * Quando se digita enter no
+     * campo de busca faz a pesquisa.
+     */
     $('#pagina_atual').keypress(function(e)
     {
 
@@ -72,6 +100,11 @@
 
     });
 
+    /**
+     * Funcao a ser executada quando
+     * clicamos para obter a proxima
+     * pagina de registros.
+     */
     $("#nav_proximo").click(function(e)
     {
 
@@ -85,6 +118,11 @@
 
     });
 
+    /**
+     * Funcao a ser executada quando
+     * clicamos para obter a pagina
+     * ANTERIOR de registros.
+     */
     $("#nav_anterior").click(function(e)
     {
 
@@ -100,6 +138,10 @@
 
     });
 
+    /**
+     * Funcao executada quando se
+     * clica na interrogacao.
+     */
     $("#dica").click(function(e)
     {
 
