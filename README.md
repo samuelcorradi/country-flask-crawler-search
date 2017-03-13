@@ -62,24 +62,37 @@ realizacao das consultas. Este campo lhe dá duas opções de busca:
 
 ## API 
 
-### /municipio/<ibge>, /municipio/<nome cidade>
+### GET /municipio/
+
+Retorna todos municipios. Sempre 10 registros serão retornados por vez. A página de resultados deve ser informada através de um campo de parametro de requisição GET.
 
 **Campos**
-| Página | Tipo | Descricao |
-|---|---|---|
-| pagina | string | Número da página dos resultados. |
+
+__pagina__ - string - Número da página dos resultados.
 
 **200**
-| Página | Tipo | Descricao |
-|---|---|---|
-| ibge | string | Código do IGBE |
-| nome | string | Nome da cidade |
-| url | string | URL para a cidade na página do IBGE |
+__ibge - string - Código do IGBE
+__nome - string - Nome da cidade
+__url - string - URL para a cidade na página do IBGE
+
+### GET /municipio/<ibge>, GET /municipio/<nome cidade>
+
+Busca por municipios de acordo com um critério de busca. Os critérios podem ser o número do IBGE, ou o nome (ou parte do nome) da cidade. Sempre 10 registros serão retornados por vez. A página de resultados deve ser informada através de um campo de parametro de requisição GET.
+
+**Campos**
+
+__pagina__ - string - Número da página dos resultados.
+
+**200**
+__ibge - string - Código do IGBE
+__nome - string - Nome da cidade
+__url - string - URL para a cidade na página do IBGE
 
 ### /municipios/
 Lista todos os municipios.
 
 **200**
+
 | Página | Tipo | Descricao |
 |---|---|---|
 | ibge | string | Código do IGBE |
