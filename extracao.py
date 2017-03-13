@@ -24,7 +24,8 @@ def extracao():
         db = municipiosdb.MunicipiosDb(DB_PATH);
         db.createTable()
 
-        hdlr = urllib.urlopen("http://api.brasil.io/mg", context=ctx)
+        hdlr = urllib.urlopen("http://api.brasil.io/mg",
+            context=ctx)
         data = hdlr.read()
         j = json.loads(data)
         for muni in j["municipios"]:
