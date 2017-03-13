@@ -15,25 +15,30 @@ class MunicipiosDb(object):
     _conn = None
     _cur = None
 
+
     def __init__(self, base):
         self._conn = sqlite3.connect(base, check_same_thread=False)
         self._conn.isolation_level = None
         self._cur = self._conn.cursor()
 
-    def query(self, pagina=1, filtro=""):
+
+    def getAll(self):
+        return self.query("", 1)
+
+
+    def query(self, filtro="", pagina=1, limite=0):
         '''
         gera o comando SQL para buscar os
         municipios
         Recebe o cursor da consulta, as
-        informacoes de busca
+        informacoes de busca, e o limite de
+        registros por pagina
         Retorna o cursor com os resultados
         da busca
         '''
         try:
-            pagina = (pagina - 1) * 10
             sql = "SELECT ibge_code, nome, link FROM municipios "
-            bind = [pagina]
-
+            bind = []
             # se ha algum filtro, testa se eh
             # pelo codigo do IBGE ou qualquer
             # outra string
@@ -43,14 +48,18 @@ class MunicipiosDb(object):
                 else:
                     sql = sql + "WHERE nome LIKE ? "
                     filtro = '%' + filtro + '%'
-                bind.insert(0, filtro)
+                bind.append(filtro)
 
-            sql = sql + "LIMIT 10 OFFSET ?;"
+            if limite>0:
+                pagina = (pagina - 1) * limite
+                bind.append(pagina)
+                sql = sql + "LIMIT %d OFFSET ?;" % limite
 
             return self._cur.execute(sql, bind)
         except:
             print 'Falha na consulta ao banco de dados.'
             raise
+
 
     def createTable(self):
         '''
@@ -63,6 +72,7 @@ class MunicipiosDb(object):
         `ibge_code` VARCHAR(7) NOT NULL,
         `nome` VARCHAR(255) NOT NULL,
         `link` VARCHAR(255) NOT NULL);''')
+
 
     def insert(self, ibge, nome=None, url=None):
         '''
@@ -86,6 +96,7 @@ class MunicipiosDb(object):
             print 'Falha na inserção dos dados.'
             self._cur.execute('ROLLBACK')
             raise
+
 
     def __del__(self):
         self._conn.close()
