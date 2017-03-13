@@ -59,3 +59,29 @@ realizacao das consultas. Este campo lhe dá duas opções de busca:
 
 * Digitar um número do IBGE irá buscar um municipio por este número.
 * Digitar uma palavra irá buscar as cidades que possuam no nome a palavra indicada.
+
+## API 
+
+### /municipio/<ibge>, /municipio/<nome cidade>
+
+**Campos**
+| Página | Tipo | Descricao |
+|---|---|---|
+| pagina | string | Número da página dos resultados. |
+
+**200**
+| Página | Tipo | Descricao |
+|---|---|---|
+| ibge | string | Código do IGBE |
+| nome | string | Nome da cidade |
+| url | string | URL para a cidade na página do IBGE |
+
+### /municipios/
+Lista todos os municipios.
+
+**200**
+| Página | Tipo | Descricao |
+|---|---|---|
+| ibge | string | Código do IGBE |
+| nome | string | Nome da cidade |
+| url | string | URL para a cidade na página do IBGE |
