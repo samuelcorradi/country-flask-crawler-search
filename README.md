@@ -98,7 +98,7 @@ Busca por municipios de acordo com um critério de busca. Os critérios podem se
 | nome | string | Nome da cidade |
 | url | string | URL para a cidade na página do IBGE |
 
-### /municipios/
+### GET /municipios/
 Lista todos os municipios.
 
 **200**
