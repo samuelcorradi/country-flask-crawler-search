@@ -68,12 +68,17 @@ Retorna todos municipios. Sempre 10 registros serão retornados por vez. A pági
 
 **Campos**
 
-__pagina__ - string - Número da página dos resultados.
+| Página | Tipo | Descrição |
+|---|---|---|
+| pagina | string | Número da página dos resultados. |
 
 **200**
-__ibge - string - Código do IGBE
-__nome - string - Nome da cidade
-__url - string - URL para a cidade na página do IBGE
+
+| Página | Tipo | Descricao |
+|---|---|---|
+| ibge | string | Código do IGBE |
+| nome | string | Nome da cidade |
+| url | string | URL para a cidade na página do IBGE |
 
 ### GET /municipio/<ibge>, GET /municipio/<nome cidade>
 
@@ -81,19 +86,24 @@ Busca por municipios de acordo com um critério de busca. Os critérios podem se
 
 **Campos**
 
-__pagina__ - string - Número da página dos resultados.
+| Página | Tipo | Descrição |
+|---|---|---|
+| pagina | string | Número da página dos resultados. |
 
 **200**
-__ibge - string - Código do IGBE
-__nome - string - Nome da cidade
-__url - string - URL para a cidade na página do IBGE
+
+| Página | Tipo | Descrição |
+|---|---|---|
+| ibge | string | Código do IGBE |
+| nome | string | Nome da cidade |
+| url | string | URL para a cidade na página do IBGE |
 
 ### /municipios/
 Lista todos os municipios.
 
 **200**
 
-| Página | Tipo | Descricao |
+| Página | Tipo | Descrição |
 |---|---|---|
 | ibge | string | Código do IGBE |
 | nome | string | Nome da cidade |
